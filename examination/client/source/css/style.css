@@ -1,0 +1,28 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+body {
+  background-image: url("http://www.hd-wallpapersdownload.com/script/bulk-upload/funny-hd-wallpapers-full-hd-3D.jpg");
+}
+ul {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  display: table;
+}
+
+li {
+  display: inline;
+}
