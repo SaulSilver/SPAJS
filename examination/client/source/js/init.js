@@ -1,7 +1,7 @@
 (function($){
   $(function(){
 
-    $('.button-collapse').sideNav();
+    $('.memoryButton-collapse').sideNav();
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space

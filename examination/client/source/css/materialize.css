@@ -2464,9 +2464,9 @@ button {
 }
 
 /**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * Address inconsistent `text-transform` inheritance for `memoryButton` and `select`.
  * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `memoryButton` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
 button,
@@ -2534,7 +2534,7 @@ input[type="radio"] {
 /**
  * Fix the cursor style for Chrome's increment/decrement buttons. For certain
  * `font-size` values of the `input`, it causes the cursor style of the
- * decrement button to change from `default` to `text`.
+ * decrement memoryButton to change from `default` to `text`.
  */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -2553,8 +2553,8 @@ input[type="search"] {
 }
 
 /**
- * Remove inner padding and search cancel button in Safari and Chrome on OS X.
- * Safari (but not Chrome) clips the cancel button when the search input has
+ * Remove inner padding and search cancel memoryButton in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel memoryButton when the search input has
  * padding (and `textfield` appearance).
  */
 input[type="search"]::-webkit-search-cancel-button,
@@ -5040,7 +5040,7 @@ button.btn-floating {
   height: 100%;
   left: auto;
   width: 500px;
-  /*width 100% only goes to width of button container */
+  /*width 100% only goes to width of memoryButton container */
 }
 
 .fixed-action-btn.horizontal ul li {
@@ -8395,7 +8395,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 }
 
 /**
- * The clear button
+ * The clear memoryButton
  */
 .picker--time .picker__button--clear {
   display: block;

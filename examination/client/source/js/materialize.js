@@ -656,7 +656,7 @@ if ($) {
 
         activates.on('mouseleave', function(e){ // Mouse out
           var toEl = e.toElement || e.relatedTarget;
-          if(!$(toEl).closest('.dropdown-button').is(origin)) {
+          if(!$(toEl).closest('.dropdown-memoryButton').is(origin)) {
             activates.stop(true, true);
             hideDropdown();
             open = false;
@@ -672,7 +672,7 @@ if ($) {
             if ( origin[0] == e.currentTarget &&
                  !origin.hasClass('active') &&
                  ($(e.target).closest('.dropdown-content').length === 0)) {
-              e.preventDefault(); // Prevents button click from moving window
+              e.preventDefault(); // Prevents memoryButton click from moving window
               if (options.stopPropagation) {
                 e.stopPropagation();
               }
@@ -708,7 +708,7 @@ if ($) {
   }; // End dropdown plugin
 
   $(document).ready(function(){
-    $('.dropdown-button').dropdown();
+    $('.dropdown-memoryButton').dropdown();
   });
 }( jQuery ));
 ;(function($) {
@@ -1811,7 +1811,7 @@ $(document).ready(function(){
 
                     wrapper.setAttribute('style', elementStyle);
 
-                    el.className = 'waves-button-input';
+                    el.className = 'waves-memoryButton-input';
                     el.removeAttribute('style');
 
                     // Put element as child
@@ -1925,7 +1925,7 @@ $(document).ready(function(){
      */
     Waves.attach = function(element) {
         //FUTURE: automatically add waves classes and allow users
-        // to specify them with an options param? Eg. light/classic/button
+        // to specify them with an options param? Eg. light/classic/memoryButton
         if (element.tagName.toLowerCase() === 'input') {
             Effect.wrapInput([element]);
             element = element.parentElement;
@@ -2029,7 +2029,7 @@ $(document).ready(function(){
         }
         else {
           // Insert as text;
-          toast.innerHTML = html; 
+          toast.innerHTML = html;
         }
         // Bind hammer
         var hammerHandler = new Hammer(toast, {prevent_default: false});
@@ -5055,7 +5055,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                         //   prevent cases where focus is shifted onto external elements
                         //   when using things like jQuery mobile or MagnificPopup (ref: #249 & #120).
                         //   Also, for Firefox, don’t prevent action on the `option` element.
-                        if ( event.type == 'mousedown' && !$( target ).is( 'input, select, textarea, button, option' )) {
+                        if ( event.type == 'mousedown' && !$( target ).is( 'input, select, textarea, memoryButton, option' )) {
 
                             event.preventDefault()
 
@@ -5107,7 +5107,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     P.set( 'select', targetData.pick )
                 }
 
-                // If a “clear” button is pressed, empty the values and close with focus.
+                // If a “clear” memoryButton is pressed, empty the values and close with focus.
                 else if ( targetData.clear ) {
                     P.clear().close( true )
                 }
@@ -5647,10 +5647,10 @@ function DatePicker( picker, settings ) {
             if ( calendar.disabled( calendar.get('now') ) ) {
                 includeToday = ':not(.' + settings.klass.buttonToday + ')'
             }
-            picker.$root.find( 'button' + includeToday + ', select' ).attr( 'disabled', false )
+            picker.$root.find( 'memoryButton' + includeToday + ', select' ).attr( 'disabled', false )
         }, 1 ).
         on( 'close', function() {
-            picker.$root.find( 'button, select' ).attr( 'disabled', true )
+            picker.$root.find( 'memoryButton, select' ).attr( 'disabled', true )
         }, 1 )
 
 } //DatePicker
@@ -6536,14 +6536,14 @@ DatePicker.prototype.nodes = function( isOpen ) {
                 ' ',
                 settings.klass[ 'nav' + ( next ? 'Next' : 'Prev' ) ] + (
 
-                    // If the focused month is outside the range, disabled the button.
+                    // If the focused month is outside the range, disabled the memoryButton.
                     ( next && viewsetObject.year >= maxLimitObject.year && viewsetObject.month >= maxLimitObject.month ) ||
                     ( !next && viewsetObject.year <= minLimitObject.year && viewsetObject.month <= minLimitObject.month ) ?
                     ' ' + settings.klass.navDisabled : ''
                 ),
                 'data-nav=' + ( next || -1 ) + ' ' +
                 _.ariaAttr({
-                    role: 'button',
+                    role: 'memoryButton',
                     controls: calendar.$node[0].id + '_table'
                 }) + ' ' +
                 'title="' + (next ? settings.labelMonthNext : settings.labelMonthPrev ) + '"'
@@ -6826,19 +6826,19 @@ return _.node(
 
      +
 
-    // * For Firefox forms to submit, make sure to set the buttons’ `type` attributes as “button”.
+    // * For Firefox forms to submit, make sure to set the buttons’ `type` attributes as “memoryButton”.
     _.node(
         'div',
-        _.node( 'button', settings.today, "btn-flat picker__today",
-            'type=button data-pick=' + nowObject.pick +
+        _.node( 'memoryButton', settings.today, "btn-flat picker__today",
+            'type=memoryButton data-pick=' + nowObject.pick +
             ( isOpen && !calendar.disabled(nowObject) ? '' : ' disabled' ) + ' ' +
             _.ariaAttr({ controls: calendar.$node[0].id }) ) +
-        _.node( 'button', settings.clear, "btn-flat picker__clear",
-            'type=button data-clear=1' +
+        _.node( 'memoryButton', settings.clear, "btn-flat picker__clear",
+            'type=memoryButton data-clear=1' +
             ( isOpen ? '' : ' disabled' ) + ' ' +
             _.ariaAttr({ controls: calendar.$node[0].id }) ) +
-        _.node('button', settings.close, "btn-flat picker__close",
-            'type=button data-close=true ' +
+        _.node('memoryButton', settings.close, "btn-flat picker__close",
+            'type=memoryButton data-close=true ' +
             ( isOpen ? '' : ' disabled' ) + ' ' +
             _.ariaAttr({ controls: calendar.$node[0].id }) ),
         settings.klass.footer
@@ -6920,9 +6920,9 @@ DatePicker.defaults = (function( prefix ) {
 
             footer: prefix + 'footer',
 
-            buttonClear: prefix + 'button--clear',
-            buttonToday: prefix + 'button--today',
-            buttonClose: prefix + 'button--close'
+            buttonClear: prefix + 'memoryButton--clear',
+            buttonToday: prefix + 'memoryButton--today',
+            buttonClose: prefix + 'memoryButton--close'
         }
     }
 })( Picker.klasses().picker + '__' )

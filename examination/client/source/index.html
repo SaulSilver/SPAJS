@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Crazy Questionnaire</title>
+  <title>Crazy SPA</title>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="stylesheet/style.css">
@@ -18,10 +18,18 @@
 
 <body>
 <ul>
-  <li> <button id="memory_button" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons up">games</i>Memory game</button>  </li>
-  <li> <button id="chat_button" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons">chat</i>Chat room</button></li>
-  <li> <button id="another_button" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons">tab</i>Another app</button></li>
+  <li> <a id="memory_button" href="#" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons up">games</i>Memory game</a>  </li>
+  <li> <a id="chat_button" href="#" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons">chat</i>Chat room</a></li>
+  <li> <a id="another_button" href="#" class="waves-effect waves-teal btn-flat btn-large"> <i class="large material-icons">tab</i>Another app</a></li>
 </ul>
+
+<!--Inner Window template-->
+<template id="window_temp">
+  <div id="div_container">
+    <a id="close_a" href="#"></a> <i class="material-icons">close</i>
+    <a id="minimize_a" href="#"></a> <i class="material-icons">remove</i>
+  </div>
+</template>
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="javascript/materialize.min.js"></script>

@@ -14,8 +14,10 @@
 }
 
 body {
-  background-image: url("http://www.hd-wallpapersdownload.com/script/bulk-upload/funny-hd-wallpapers-full-hd-3D.jpg");
+  background-image: url("http://wallpaper.zone/img/5628990.jpg");
+  background-size: cover;
 }
+
 ul {
   list-style-type: none;
   margin: 0 auto;
@@ -25,4 +27,13 @@ ul {
 
 li {
   display: inline;
+}
+
+#div_container {
+  background-color: white;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: 0;
+  right: 0;
 }
