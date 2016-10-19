@@ -14,8 +14,14 @@
 }
 
 body {
-  background-image: url("http://wallpaper.zone/img/5628990.jpg");
-  background-size: cover;
+  background-image: url("http://cdn.playbuzz.com/cdn/b7a309b7-6ce3-415c-8122-8670a9e37a60/dd015d8e-0500-4c57-b58d-acd993fd6f29.jpg");
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
 }
 
 ul {
@@ -27,13 +33,13 @@ ul {
 
 li {
   display: inline;
+
 }
 
-#div_container {
+.div_container {
   background-color: white;
   position: absolute;
   width: 200px;
   height: 200px;
-  bottom: 0;
-  right: 0;
+
 }
