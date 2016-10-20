@@ -3,7 +3,6 @@
  */
 var counter = 0;    //Counts the number of windows
 var currentDiv;     //The current selected window
-
 module.exports = function(iconName, title) {
   counter++;
   console.log(counter + "window created");
@@ -73,7 +72,8 @@ module.exports = function(iconName, title) {
 
   function startMemoryGame() {
     var createMemory = require('./memory');
-    new createMemory(4, 4, windowDiv);
+    //TODO:Ask the player for the number of tiles
+    new createMemory(2, 2, windowDiv);
   }
 
 

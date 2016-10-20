@@ -7,37 +7,64 @@ module.exports = function (rows, cols, windowDiv) {
   var turn1;
   var turn2;
   var lastTile;
+  var pairs = 0;
+  var tries = 0;
 
-  var tiles = getPictureArray(rows, cols);
+  var tiles = [];
+  tiles = getPictureArray();
   var container = windowDiv.getElementsByClassName('window_container')[0];
-  var template = document.getElementById('memory_temp').content.firstElementChild;
+  var templateDiv = document.getElementById('memory_temp').content.firstElementChild;
+
+  var div = document.importNode(templateDiv.firstElementChild, false);
+  var textDiv = document.importNode(document.getElementById('memory_temp').content.lastElementChild, false);
+  textDiv.innerText = 'Number of tries: ' + tries;
 
   tiles.forEach(function (tile, index) {
 
-    a = document.importNode(template, true);
-    container.appendChild(a);
+    a = document.importNode(templateDiv.firstElementChild, true);
+    a.firstElementChild.setAttribute('data-bricknumber', index);
+    div.appendChild(a);
 
-    a.addEventListener('click', function (event) {
-      var img = event.target.nodeName === 'IMG' ? event.target : event.target.firstElementChild;
-      turnBrick(tile, index, img)
-    });
 
     if ((index + 1) % cols === 0)
-      container.appendChild(document.createElement('br'));
+      div.appendChild(document.createElement('br'));
   });
 
+  div.addEventListener('click', function (event) {
+    event.preventDefault();
+    var img = event.target.nodeName === 'IMG' ? event.target : event.target.firstElementChild;
+    var index = parseInt(img.getAttribute('data-bricknumber'));
+    turnBrick(tiles[index], index, img);
+  });
+
+  container.appendChild(div);
+  container.appendChild(textDiv);
+
   function turnBrick(tile, index, img) {
+    if (turn2)
+      return;
+
     img.src = 'image/' + tile + '.jpg';
 
     if (!turn1) {
       turn1 = img;
       lastTile = tile;
     } else {
-      if (img === turn1) {return;}
-
+      //Second brick is clicked
+      if (img === turn1)
+        return;
+      tries++;
+      textDiv.innerText = 'Number of tries: ' + tries;
       turn2 = img;
       if (tile === lastTile) {
-        console.log('pair!');
+        //Found a pair
+        pairs++;
+
+        if (pairs === (cols * rows) / 2) {
+          textDiv.classList.remove('light-blue');
+          textDiv.classList.remove('lighten-4');
+          textDiv.innerText = 'You Won! ' + 'with '+ tries + ' tries!';
+      }
 
         window.setTimeout(function () {
           turn1.parentNode.classList.add('removed');
@@ -45,7 +72,7 @@ module.exports = function (rows, cols, windowDiv) {
 
           turn1 = null;
           turn2 = null;
-        }, 200);
+        }, 100);
       } else {
         window.setTimeout(function () {
           turn1.src = 'image/0.jpg';
@@ -57,7 +84,8 @@ module.exports = function (rows, cols, windowDiv) {
       }
     }
   }
-  function getPictureArray(rows, cols) {
+
+  function getPictureArray() {
     var i;
     var arr = [];
 
