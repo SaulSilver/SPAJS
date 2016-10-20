@@ -33,13 +33,17 @@ ul {
 
 li {
   display: inline;
-
 }
 
 .div_container {
   background-color: white;
   position: absolute;
-  width: 200px;
-  height: 200px;
-
+  width: 400px;
+  height: 400px;
 }
+
+.removed {
+  visibility: hidden;
+}
+
+

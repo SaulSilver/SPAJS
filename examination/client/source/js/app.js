@@ -1,19 +1,13 @@
 var createWindow = require('./window');
 
-var memory = document.getElementById('memory_button');
-memory.addEventListener('click', function (event) {
+var memory = document.getElementById('memory_button').addEventListener('click', function (event) {
 
-    createWindow();
+    createWindow('games', 'memory_temp');
   }
 );
 
-var chat = document.getElementById('chat_button');
-chat.addEventListener('click', function (event) {
-    startChat;
-    createWindow();
+var chat = document.getElementById('chat_button').addEventListener('click', function (event) {
+    createWindow('chat', 'El-Chat');
   }
 );
 
-function startChat() {
-
-}
