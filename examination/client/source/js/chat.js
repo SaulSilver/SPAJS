@@ -1,15 +1,18 @@
 /**
  * Created by hatem on 2016-10-21.
  */
-module.exports = function (username, windowDiv, socket) {
+module.exports = function (username, windowDiv) {
+  var socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/');
 
   var chat_temp = document.importNode(document.getElementById('chat_temp').content.firstElementChild, true);
   windowDiv.appendChild(chat_temp);
 
-  var socketStatus = document.getElementsByClassName('status')[0];
-  var messagesList = document.getElementsByClassName('messages')[0];
-  var textField = document.getElementsByClassName('text_msg')[0];
-  var send_button = document.getElementsByClassName('send_button')[0];
+  var socketStatus = chat_temp.firstElementChild;
+  var messagesList = chat_temp.getElementsByClassName('messages')[0];
+  var textField = chat_temp.getElementsByClassName('text_msg')[0];
+  var send_button = chat_temp.getElementsByClassName('send_button')[0];
+  var username_button = chat_temp.getElementsByClassName('username_button')[0];
+  var msgsDiv = chat_temp.getElementsByClassName('msgs_div')[0];
 
   //Adding the Close listener
   var close = windowDiv.getElementsByClassName('close_a')[0];
@@ -36,30 +39,36 @@ module.exports = function (username, windowDiv, socket) {
       channel: "my, not so secret, channel",
       key: "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"
     };
-
     socket.send(JSON.stringify(message));
 
-    var liElement = document.importNode(messagesList.firstElementChild, true);
-    liElement.innerText = username + ': ' + message.data;
-    messagesList.appendChild(liElement);
+    textField.value = '';     //Reset the text field
+  });
 
-    textField.value = '';
+  // Change username
+  username_button.addEventListener('click', function (event) {
+    var newUsername = prompt('Your new username: ');
+
+    if (newUsername != null) {
+      username = newUsername;
+      localStorage.setItem('username', newUsername);
+    }
   });
 
   socket.onmessage = function (event) {
-    var parsedJSON = JSON.parse(event.data);
-    console.log(parsedJSON);
+    //Always show the last message sent/received
+    msgsDiv.scrollTop = msgsDiv.scrollHeight;
 
-    if (!parsedJSON['type'].includes('heartbeat')) {
+    var parsedJSON = JSON.parse(event.data);
+
+    if (!parsedJSON['type'].includes('heartbeat')) {    //Ignore heartbeat msgs
       if (parsedJSON['type'].includes('notification'))
         socketStatus.innerText = parsedJSON['data'];
 
       if (parsedJSON['type'].includes('message')) {
         var liElement = document.importNode(messagesList.firstElementChild, true);
-        liElement.innerText = parsedJSON['username'] + ': ' + parsedJSON['data'] + '<br>';
+        liElement.innerText = '"' + parsedJSON['username'] + '" sent: ' + parsedJSON['data'];
         messagesList.appendChild(liElement);
       }
     }
   };
-
 };

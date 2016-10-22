@@ -10,8 +10,7 @@ module.exports = function(iconName, title, socket) {
   //Adding the template
   var template = document.getElementById('window_temp');
   var windowDiv = document.importNode(template.content.firstElementChild, true);
-  //TODO: Set window title
-  windowDiv.title = title;
+  var windowToolbar = windowDiv.getElementsByClassName('toolbar')[0];
   document.getElementsByTagName('ul')[0].appendChild(windowDiv);
 
   //Set the window icon
@@ -39,10 +38,21 @@ module.exports = function(iconName, title, socket) {
     windowDiv.parentNode.removeChild(windowDiv);
   });
 
-  if (title.includes('memory'))
+  //Setting the window title and deciding which app should launch
+  var windowTitle;
+  if (title.includes('memory')) {
+    windowTitle = document.createTextNode('Memory');
+    windowToolbar.appendChild(windowTitle);
     startMemoryGame();
-  else if (title.includes('Chat'))
+  } else if (title.includes('Chat')) {
+    windowTitle = document.createTextNode('Chat');
+    windowToolbar.appendChild(windowTitle);
     startChat();
+  } else if (title.includes('todo')) {
+    windowTitle = document.createTextNode('ToDo');
+    windowToolbar.appendChild(windowTitle);
+    startToDo();
+  }
 
   function mouseUp() {
     windowDiv.style.opacity = 1;    //Defocus the window after dragging is done
@@ -62,11 +72,13 @@ module.exports = function(iconName, title, socket) {
       windowDiv.style.left = (e.clientX - xPos) + 'px';
     } else {
       //TODO: still need to check the boundaries of the window creation
-      var rect = windowDiv.getBoundingClientRect();
-      if((rect.y + rect.height) < 0)
-        counter = 1;
       windowDiv.style.top = counter * 20 + 'px';
       windowDiv.style.left =  counter * 20 + 'px';
+
+      //Check the bottom boundaries and reset if the new window is offscreen
+      var windowBottom = counter * 20 + windowDiv.clientHeight;
+      if (windowBottom > window.innerHeight)
+        counter = 0;
     }
   }
 
@@ -85,8 +97,6 @@ module.exports = function(iconName, title, socket) {
     windowDiv.appendChild(tilesNumberDiv);
 
     //To check which option is chosen
-    //var selectionDiv = document.importNode(tilesNumberDiv.lastElementChild, true);
-    //tilesNumberDiv.appendChild(selectionDiv);
     var selectionDiv = tilesNumberDiv.lastElementChild;
     selectionDiv.addEventListener('click', function (event) {
       event.preventDefault();
@@ -104,7 +114,7 @@ module.exports = function(iconName, title, socket) {
       }
       event.stopPropagation();
       windowDiv.removeChild(tilesNumberDiv);
-      new createMemory(rows, cols, windowDiv);
+      new createMemory(rows, cols, windowDiv);    //Start the game
     });
 
   }
@@ -126,11 +136,55 @@ module.exports = function(iconName, title, socket) {
         userName = document.getElementById('user_answer').value;
         localStorage.setItem('username', userName);
         windowDiv.removeChild(userName_temp);
-        new startChat(userName, windowDiv, socket);
       });
-    } else {
+    } else
       userName = localStorage.getItem('username');
-      new startChat(userName, windowDiv, socket);
+    new startChat(userName, windowDiv);
+  }
+
+  /**
+   * Start the to Do app
+   */
+  function startToDo() {
+    var todo_div = document.importNode(document.getElementById('todo_temp').content.firstElementChild, true);
+    todo_div.getElementsByClassName('add')[0].addEventListener('click', add);
+    var todoList = todo_div.getElementsByClassName('todos').content.firstElementChild;
+    show();
+
+    function add() {
+      var task = todo_div.getElementsByClassName('task').value;
+
+      var todos = get_todos();
+      todos.push(task);
+      localStorage.setItem('todo', JSON.stringify(todos));
+
+      show();
+
+      return false;
+    }
+
+    function get_todos() {
+      var todos = new Array;
+      var todosStr = localStorage.getItem('todo');
+      if (todosStr != null)
+        todos = JSON.parse(todosStr);
+      return todos;
+    }
+
+    function show() {
+      var todos = get_todos();
+
+      for (var i = 0; i < todos.length; i++){
+        var todoLiItem = document.importNode(todoList.firstElementChild, true);
+        todoLiItem.innerText = todos[i];
+      }
+
+      var buttons = todoList.getElementsByClassName('remove');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function (event) {
+            //TODO: remove the li item from the array
+        });
+      }
     }
   }
 };
