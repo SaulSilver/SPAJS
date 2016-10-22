@@ -11,7 +11,7 @@ module.exports = function (rows, cols, windowDiv) {
   var tries = 0;
 
   var tiles = [];
-  tiles = getPictureArray();
+  tiles = getPictureArray();    //Shuffle the array
   var container = windowDiv.getElementsByClassName('window_container')[0];
   var templateDiv = document.getElementById('memory_temp').content.firstElementChild;
 
@@ -25,7 +25,7 @@ module.exports = function (rows, cols, windowDiv) {
     a.firstElementChild.setAttribute('data-bricknumber', index);
     div.appendChild(a);
 
-
+    //New line
     if ((index + 1) % cols === 0)
       div.appendChild(document.createElement('br'));
   });
@@ -65,7 +65,7 @@ module.exports = function (rows, cols, windowDiv) {
           textDiv.classList.remove('lighten-4');
           textDiv.innerText = 'You Won! ' + 'with '+ tries + ' tries!';
       }
-
+        //Turn back the bricks
         window.setTimeout(function () {
           turn1.parentNode.classList.add('removed');
           turn2.parentNode.classList.add('removed');
@@ -85,6 +85,10 @@ module.exports = function (rows, cols, windowDiv) {
     }
   }
 
+  /**
+   * Shuffle the tiles
+   * @returns {Array}: the shuffled array of tiles
+   */
   function getPictureArray() {
     var i;
     var arr = [];
@@ -103,3 +107,4 @@ module.exports = function (rows, cols, windowDiv) {
     return arr;
   }
 };
+

@@ -24,7 +24,7 @@
 </ul>
 
 <!--Inner Window template-->
-<template id="window_temp">
+<template id="window_temp" class="window">
   <div class="z-depth-5 div_container" >
     <div class="deep-orange lighten-5" title="waza">
       <i class="window_icon material-icons"></i>
@@ -41,8 +41,46 @@
   <div class="memory">
     <a href="#"><img src="image/0.jpg" alt="A memory brick" hspace="5"> </a>
   </div>
-  <div class="text_div card-panel light-blue lighten-4 red accent-4">
 
+  <div class="text_div card-panel light-blue lighten-4 red accent-4">
+    Number of tries goes here and winning notification
+  </div>
+</template>
+
+<!--Number of tiles for memory game template-->
+<template id="tiles_temp">
+  <div class="tiles_number_div container">
+    <h3>How many tiles do you want?</h3>
+    <div class="select_tiles">
+      <button class="btn waves-effect waves-light 1">4 X 4</button>
+      <button class= "btn waves-effect waves-light 2">2 X 2</button>
+      <button class="btn waves-effect waves-light 3">2 X 4</button>
+    </div>
+  </div>
+</template>
+
+<!--Chat template-->
+<template id="chat_temp">
+  <div>
+    <div class="container status">Connecting...</div>
+    <div class="msgs_div">
+      <ul class="messages">
+        <li></li>
+      </ul>
+    </div>
+    <div class="container send_msg_div">
+      <textarea class="text_msg" placeholder="Write your message here.." required></textarea>
+      <button class="send_button">Send</button>
+    </div>
+  </div>
+</template>
+
+<!--Ask username for chat template-->
+<template id="username_chat_temp">
+  <div class="container">
+    <h3>What username would you like?</h3>
+    <input type="text" id="user_answer" value="I am not creative at all">
+    <button id="submit_button" type="button">Aight</button>
   </div>
 </template>
 

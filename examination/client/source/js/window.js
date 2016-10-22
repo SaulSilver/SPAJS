@@ -3,7 +3,7 @@
  */
 var counter = 0;    //Counts the number of windows
 var currentDiv;     //The current selected window
-module.exports = function(iconName, title) {
+module.exports = function(iconName, title, socket) {
   counter++;
   console.log(counter + "window created");
 
@@ -70,14 +70,67 @@ module.exports = function(iconName, title) {
     }
   }
 
+  /**
+   * Start the Memory game
+   */
   function startMemoryGame() {
+    var startGameFlag = false;
+    var rows;
+    var cols;
+    var answer;
     var createMemory = require('./memory');
-    //TODO:Ask the player for the number of tiles
-    new createMemory(2, 2, windowDiv);
+
+    //Ask the player for the number of tiles
+    var tilesNumberDiv = document.importNode(document.getElementById('tiles_temp').content.firstElementChild, true);
+    windowDiv.appendChild(tilesNumberDiv);
+
+    //To check which option is chosen
+    //var selectionDiv = document.importNode(tilesNumberDiv.lastElementChild, true);
+    //tilesNumberDiv.appendChild(selectionDiv);
+    var selectionDiv = tilesNumberDiv.lastElementChild;
+    selectionDiv.addEventListener('click', function (event) {
+      event.preventDefault();
+      answer = event.target.classList;
+
+      if (answer.contains('1')) {
+        rows = 4;
+        cols = 4;
+      } else if (answer.contains('2')) {
+        rows = 2;
+        cols = 2;
+      } else if (answer.contains('3')) {
+        rows = 2;
+        cols = 4
+      }
+      event.stopPropagation();
+      windowDiv.removeChild(tilesNumberDiv);
+      new createMemory(rows, cols, windowDiv);
+    });
+
   }
 
-
+  /**
+   * Start the Chat
+   */
   function startChat() {
-    var socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/');
+    var startChat = require('./chat');
+    var userName;
+    var windowsList = document.getElementsByClassName('window');
+
+    if (localStorage.length === 0) {
+      var userName_temp = document.importNode(document.getElementById('username_chat_temp').content.firstElementChild, true);
+      windowDiv.appendChild(userName_temp);
+
+      var submitAns = document.getElementById('submit_button');
+      submitAns.addEventListener('click', function (event) {
+        userName = document.getElementById('user_answer').value;
+        localStorage.setItem('username', userName);
+        windowDiv.removeChild(userName_temp);
+        new startChat(userName, windowDiv, socket);
+      });
+    } else {
+      userName = localStorage.getItem('username');
+      new startChat(userName, windowDiv, socket);
+    }
   }
 };

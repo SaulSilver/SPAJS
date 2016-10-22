@@ -39,11 +39,26 @@ li {
   background-color: white;
   position: absolute;
   width: 400px;
-  height: 400px;
+  height: 450px;
 }
 
 .removed {
   visibility: hidden;
 }
 
+.msgs_div {
+  overflow-y: scroll;
+  height: 300px;
+}
 
+#text_msg {
+  resize: none;
+}
+
+.messages li {
+  display: block;
+}
+
+.messages {
+  padding-left: 0;
+}
