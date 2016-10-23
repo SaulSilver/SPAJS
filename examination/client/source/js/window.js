@@ -3,9 +3,8 @@
  */
 var counter = 0;    //Counts the number of windows
 var currentDiv;     //The current selected window
-module.exports = function(iconName, title, socket) {
+module.exports = function(iconName, title) {
   counter++;
-  console.log(counter + "window created");
 
   //Adding the template
   var template = document.getElementById('window_temp');
@@ -48,17 +47,19 @@ module.exports = function(iconName, title, socket) {
     windowTitle = document.createTextNode('Chat');
     windowToolbar.appendChild(windowTitle);
     startChat();
-  } else if (title.includes('todo')) {
-    windowTitle = document.createTextNode('ToDo');
+  } else if (title.includes('gallery')) {
+    windowTitle = document.createTextNode('Gallery');
     windowToolbar.appendChild(windowTitle);
-    startToDo();
+    startGallery();
   }
 
+  //For window dragging
   function mouseUp() {
     windowDiv.style.opacity = 1;    //Defocus the window after dragging is done
     window.removeEventListener('mousemove', divMove, true);
   }
 
+  //For window dragging
   function mouseDown(e) {
     windowDiv.style.opacity = 0.7;      //Focusing the window while dragging
     xPos = e.clientX - windowDiv.offsetLeft;
@@ -66,12 +67,12 @@ module.exports = function(iconName, title, socket) {
     window.addEventListener('mousemove', divMove, true);
   }
 
+  //For window dragging
   function divMove(e) {
     if(e != undefined) {
       windowDiv.style.top = (e.clientY - yPos) + 'px';
       windowDiv.style.left = (e.clientX - xPos) + 'px';
     } else {
-      //TODO: still need to check the boundaries of the window creation
       windowDiv.style.top = counter * 20 + 'px';
       windowDiv.style.left =  counter * 20 + 'px';
 
@@ -116,7 +117,6 @@ module.exports = function(iconName, title, socket) {
       windowDiv.removeChild(tilesNumberDiv);
       new createMemory(rows, cols, windowDiv);    //Start the game
     });
-
   }
 
   /**
@@ -125,42 +125,88 @@ module.exports = function(iconName, title, socket) {
   function startChat() {
     var startChat = require('./chat');
     var userName;
-    var windowsList = document.getElementsByClassName('window');
 
+    //Ask the user for the username if there is no username set
     if (localStorage.length === 0) {
       var userName_temp = document.importNode(document.getElementById('username_chat_temp').content.firstElementChild, true);
       windowDiv.appendChild(userName_temp);
 
-      var submitAns = document.getElementById('submit_button');
+      var submitAns = userName_temp.getElementsByClassName('submit_button')[0];
       submitAns.addEventListener('click', function (event) {
-        userName = document.getElementById('user_answer').value;
+        userName = userName_temp.getElementsByClassName('user_answer')[0].value;
         localStorage.setItem('username', userName);
         windowDiv.removeChild(userName_temp);
+        new startChat(userName, windowDiv);
       });
-    } else
+    } else {
       userName = localStorage.getItem('username');
-    new startChat(userName, windowDiv);
+      new startChat(userName, windowDiv);
+    }
   }
 
   /**
-   * Start the to Do app
+   * Start the Gallery
    */
+  function startGallery() {
+    var galleryDiv = document.importNode(document.getElementById('gallery_temp').content.firstElementChild, true);
+    windowDiv.appendChild(galleryDiv);
+    galleryDiv.addEventListener('click', function (event) {
+      var srcImg = event.target.getAttribute('src');
+      if(srcImg != null)
+        galleryDiv.lastElementChild.firstElementChild.setAttribute('src', srcImg);
+    })
+  }
+
+/*
+  /!**
+   * Start the to Do app
+   *!/
   function startToDo() {
     var todo_div = document.importNode(document.getElementById('todo_temp').content.firstElementChild, true);
-    todo_div.getElementsByClassName('add')[0].addEventListener('click', add);
-    var todoList = todo_div.getElementsByClassName('todos').content.firstElementChild;
+    windowDiv.appendChild(todo_div);
+
+    var task = todo_div.firstElementChild;
+    var todoList = todo_div.lastElementChild;
+    var addButton = task.nextElementSibling;
+    addButton.addEventListener('click', add);
+
     show();
 
     function add() {
-      var task = todo_div.getElementsByClassName('task').value;
-
+      console.log(' in the add method');
+      var taskValue = task.value;
+      task.value = '';
       var todos = get_todos();
-      todos.push(task);
+      todos.push(taskValue);
       localStorage.setItem('todo', JSON.stringify(todos));
 
       show();
 
       return false;
+    }
+
+    function show() {
+      var todos = get_todos();
+
+      var html = '<ul>';
+      for (var i = 0; i < todos.length; i++){
+        html += '<li>' + todos[i] + '<button class="remove" id="' + i + counter + '">x</button></li>';
+        // var todoLiItem = document.importNode(todoList.firstElementChild, true);
+        // todoLiItem.appendChild(document.createTextNode(todos[i]));
+        // todoList.appendChild(todoLiItem);
+      }
+      html += '</ul>';
+      todoList.innerHTML = html;
+
+      var buttons = todoList.getElementsByClassName('remove');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function (event) {
+          var id = event.target.getAttribute('id');
+
+          todos.splice(id, 1);
+          localStorage.setItem('todo', JSON.stringify(todos));
+        });
+      }
     }
 
     function get_todos() {
@@ -170,21 +216,8 @@ module.exports = function(iconName, title, socket) {
         todos = JSON.parse(todosStr);
       return todos;
     }
-
-    function show() {
-      var todos = get_todos();
-
-      for (var i = 0; i < todos.length; i++){
-        var todoLiItem = document.importNode(todoList.firstElementChild, true);
-        todoLiItem.innerText = todos[i];
-      }
-
-      var buttons = todoList.getElementsByClassName('remove');
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function (event) {
-            //TODO: remove the li item from the array
-        });
-      }
-    }
   }
+*/
+
+
 };

@@ -20,7 +20,6 @@ module.exports = function (rows, cols, windowDiv) {
   textDiv.innerText = 'Number of tries: ' + tries;
 
   tiles.forEach(function (tile, index) {
-
     a = document.importNode(templateDiv.firstElementChild, true);
     a.firstElementChild.setAttribute('data-bricknumber', index);
     div.appendChild(a);
@@ -40,6 +39,7 @@ module.exports = function (rows, cols, windowDiv) {
   container.appendChild(div);
   container.appendChild(textDiv);
 
+  //To show the image of the chosen tile and check game updates
   function turnBrick(tile, index, img) {
     if (turn2)
       return;

@@ -42,20 +42,24 @@ li {
   height: 450px;
 }
 
+/*The Close button for the window*/
 .close_a {
   float: right;
 }
 
+/*Hide the pairs in the Memory game*/
 .removed {
   visibility: hidden;
 }
 
+/*Adding the scroll functionality for the chat messages*/
 .msgs_div {
   overflow-y: scroll;
-  height: 300px;
+  height: 270px;
 }
 
-#text_msg {
+/*Disable the resizing of the Send text area in the chat */
+.text_msg {
   resize: none;
 }
 
@@ -71,7 +75,25 @@ li {
   float: right;
 }
 
+/*Size of the tiles in the Memory games */
 .select_tiles button {
   display: block;
   margin: 10px;
+}
+
+.thumbnails a {
+  display: inline;
+}
+
+/* Setting the size of the gallery photos size */
+.stored_imgs {
+  width: 20px;
+  height: 20px;
+}
+
+/* Setting the position of the gallery preview photo*/
+.preview_img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 }

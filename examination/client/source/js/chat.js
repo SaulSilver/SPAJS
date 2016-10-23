@@ -20,11 +20,6 @@ module.exports = function (username, windowDiv) {
     socket.close();
   });
 
-  // Show a connected message when the WebSocket is opened
-  socket.onopen = function(event) {
-
-  };
-
   // Handle any errors that occur
   socket.onerror = function(error) {
     socketStatus('WebSocket Error: ' + error);
@@ -35,7 +30,7 @@ module.exports = function (username, windowDiv) {
     var message = {
       type: "message",
       data: textField.value,
-      username: username,
+      username: localStorage.getItem('username'),
       channel: "my, not so secret, channel",
       key: "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"
     };

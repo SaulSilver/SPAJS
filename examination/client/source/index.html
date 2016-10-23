@@ -20,13 +20,13 @@
 <ul>
   <li> <a id="memory_button" href="#" class="waves-effect waves-teal btn-flat btn-large" title="Memory"> <i class="large material-icons">games</i></a>  </li>
   <li> <a id="chat_button" href="#" class="waves-effect waves-teal btn-flat btn-large" title="Chat"> <i class="large material-icons">chat</i></a></li>
-  <li> <a id="todo_button" href="#" class="waves-effect waves-teal btn-flat btn-large" title="ToDo"> <i class="large material-icons">tab</i></a></li>
+  <li> <a id="gallery_button" href="#" class="waves-effect waves-teal btn-flat btn-large" title="Gallery"> <i class="large material-icons">tab</i></a></li>
 </ul>
 
 <!--Inner Window template-->
 <template id="window_temp" class="window">
   <div class="z-depth-5 div_container" >
-    <div class="toolbar deep-orange lighten-5">
+    <div class="toolbar blue-grey lighten-4">
       <i class="window_icon material-icons"></i>
       <a class="close_a"> <i class="material-icons">close</i></a>
     </div>
@@ -72,8 +72,8 @@
     <div class="container send_msg_div">
       <textarea class="text_msg" placeholder="Write your message here.." required></textarea>
       <div class="buttons_div">
-        <button class="send_button">Send</button>
-        <button class="username_button">Change Username</button>
+        <button class="send_button btn blue-grey darken-1">Send</button>
+        <button class="username_button btn blue-grey darken-1">Change Username</button>
       </div>
     </div>
   </div>
@@ -83,20 +83,31 @@
 <template id="username_chat_temp">
   <div class="container">
     <h3>What username would you like?</h3>
-    <input type="text" id="user_answer" value="I am not creative at all">
-    <button id="submit_button" type="button">Aight</button>
+    <input type="text" class="user_answer" value="I am not creative at all">
+    <button class="submit_button btn blue-grey darken-1" type="button">Aight</button>
   </div>
 </template>
 
+<template id="gallery_temp">
+  <div class="thumbnails collection card-panel black">
+    <a><img class="stored_imgs white" src="image/img1.png" alt="Instagram logo" /></a>
+    <a><img class="stored_imgs white" src="image/img2.png" alt="Instagram logo black and white" /></a>
+    <a><img class="stored_imgs" src="image/img3.png" alt="Boomerang app logo" /></a>
+    <a><img class="stored_imgs white" src="image/img4.png" alt="pizza logo" /></a> <br>
+    <hr>
+    <a><img class="preview_img white"/></a>
+  </div>
+</template>
 <!--To do app template-->
 <template id="todo_temp">
   <div>
-    <input class="task"><button class="add">Add</button>
+    <input class="task">
+    <button class="add">Add</button>
     <hr>
     <div class="todos">
-      <ul>
-        <li><button class="remove">X</button></li>
-      </ul>
+      <!--<ul>
+        <li><a class="remove"> <i class="material-icons">close</i></a></li>
+      </ul>-->
     </div>
   </div>
 </template>
